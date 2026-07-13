@@ -7,8 +7,9 @@ import {
   defensePositionRules,
   formationCallouts,
 } from "@/data/solarcards-rules";
+import { cardArt } from "@/data/solarcards-assets";
 import { SectionHeading } from "./SectionHeading";
-import { CelestialBody } from "./CelestialBody";
+import { SolarCardImage } from "./SolarCardImage";
 
 const STAGE_MS = 2600;
 
@@ -38,11 +39,7 @@ function FormationStage({ stage }: { stage: number }) {
       <div className="relative flex items-center gap-14">
         {/* Protected card stays put */}
         <div className="relative">
-          <div className="h-32 w-22 w-[5.5rem] rounded-lg border-2 border-black bg-space-surface p-1.5">
-            <div className="flex h-full items-center justify-center rounded bg-space-navy">
-              <CelestialBody variant="star" size={44} />
-            </div>
-          </div>
+          <SolarCardImage src={cardArt.starSunYoung} alt="" width={88} />
           <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] font-bold whitespace-nowrap uppercase tracking-wider text-ink-muted">
             Protected
           </span>
@@ -52,11 +49,9 @@ function FormationStage({ stage }: { stage: number }) {
         <motion.div
           animate={defenderAnimation}
           transition={{ type: "spring", stiffness: 70, damping: 16 }}
-          className="relative z-10 h-32 w-[5.5rem] rounded-lg border-2 border-moon/70 bg-space-surface p-1.5 shadow-[0_0_24px_rgba(121,232,255,0.3)]"
+          className="relative z-10 rounded-xl shadow-[0_0_24px_rgba(121,232,255,0.3)] ring-2 ring-moon/70"
         >
-          <div className="flex h-full items-center justify-center rounded bg-space-navy">
-            <CelestialBody variant="moon" size={40} />
-          </div>
+          <SolarCardImage src={cardArt.moonLuna} alt="" width={88} />
         </motion.div>
       </div>
 
@@ -67,10 +62,8 @@ function FormationStage({ stage }: { stage: number }) {
         transition={{ duration: 0.6 }}
         className="absolute top-5 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1"
       >
-        <div className="h-20 w-14 rotate-3 rounded-lg border-2 border-anomaly/80 bg-space-surface p-1 shadow-[0_0_20px_rgba(255,79,163,0.4)]">
-          <div className="flex h-full items-center justify-center rounded bg-space-navy">
-            <CelestialBody variant="anomaly" size={26} />
-          </div>
+        <div className="rotate-3 rounded-xl shadow-[0_0_20px_rgba(255,79,163,0.4)] ring-2 ring-anomaly/80">
+          <SolarCardImage src={cardArt.anomalyBigBang} alt="" width={56} />
         </div>
         <svg width="20" height="34" viewBox="0 0 20 34" fill="none">
           <path d="M10 0v26M3 20l7 8 7-8" stroke="#FF4FA3" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />

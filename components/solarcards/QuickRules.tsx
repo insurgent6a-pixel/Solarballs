@@ -3,12 +3,21 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion, AnimatePresence } from "motion/react";
 import { quickMoves, quickMovesFooter } from "@/data/solarcards-rules";
+import { cardArt } from "@/data/solarcards-assets";
 import { SectionHeading } from "./SectionHeading";
-import { CelestialBody } from "./CelestialBody";
+import { SolarCardImage } from "./SolarCardImage";
 
 const PHASE_MS = 3200;
 
 const moveAccents = ["text-moon", "text-earth", "text-anomaly", "text-sun"];
+
+const handCardArt = [
+  cardArt.moonLuna,
+  cardArt.planetJupiter,
+  cardArt.planetEarth,
+  cardArt.moonEuropa,
+  cardArt.anomalyBigBang,
+];
 
 /** Looping storyboard: hand, summon, battle, objective. */
 function MoveAnimation({ phase }: { phase: number }) {
@@ -34,12 +43,10 @@ function MoveAnimation({ phase }: { phase: number }) {
                 initial={{ y: 60, rotate: 0 }}
                 animate={{ y: Math.abs(angle) * 0.5, rotate: angle }}
                 transition={{ delay: cardIndex * 0.12, type: "spring", stiffness: 160, damping: 14 }}
-                className="-mx-3 h-24 w-16 rounded-lg border-2 border-black bg-space-surface shadow-[0_6px_18px_rgba(0,0,0,0.6)]"
+                className="-mx-3"
                 style={{ transformOrigin: "bottom center" }}
               >
-                <div className="m-1 flex h-14 items-center justify-center rounded bg-space-navy">
-                  <CelestialBody variant={(["moon", "planet", "earth", "moon", "anomaly"] as const)[cardIndex]} size={26} />
-                </div>
+                <SolarCardImage src={handCardArt[cardIndex]} alt="" width={64} />
               </motion.div>
             ))}
           </motion.div>
@@ -51,11 +58,9 @@ function MoveAnimation({ phase }: { phase: number }) {
               initial={{ y: 90, scale: 0.7, rotate: -10 }}
               animate={{ y: 0, scale: 1, rotate: 0 }}
               transition={{ type: "spring", stiffness: 120, damping: 14 }}
-              className="h-28 w-20 rounded-lg border-2 border-black bg-space-surface p-1.5 shadow-[0_0_30px_rgba(121,232,255,0.35)]"
+              className="shadow-[0_0_30px_rgba(121,232,255,0.35)]"
             >
-              <div className="flex h-full items-center justify-center rounded bg-space-navy">
-                <CelestialBody variant="moon" size={40} />
-              </div>
+              <SolarCardImage src={cardArt.moonLuna} alt="" width={80} />
             </motion.div>
             <motion.span
               initial={{ opacity: 0 }}
@@ -71,11 +76,8 @@ function MoveAnimation({ phase }: { phase: number }) {
             <motion.div
               animate={{ x: [0, 26, 0], rotate: [0, 8, 0] }}
               transition={{ duration: 1.4, delay: 0.3 }}
-              className="h-28 w-20 rounded-lg border-2 border-black bg-space-surface p-1.5"
             >
-              <div className="flex h-full items-center justify-center rounded bg-space-navy">
-                <CelestialBody variant="earth" size={40} />
-              </div>
+              <SolarCardImage src={cardArt.planetEarth} alt="" width={80} />
             </motion.div>
             <motion.span
               initial={{ scale: 0, opacity: 0 }}
@@ -86,11 +88,8 @@ function MoveAnimation({ phase }: { phase: number }) {
             <motion.div
               animate={{ x: [0, 14, 60], rotate: [0, -6, -18], opacity: [1, 1, 0.25] }}
               transition={{ duration: 1.5, delay: 0.9 }}
-              className="h-28 w-20 rounded-lg border-2 border-black bg-space-surface p-1.5"
             >
-              <div className="flex h-full items-center justify-center rounded bg-space-navy">
-                <CelestialBody variant="dwarf" size={34} />
-              </div>
+              <SolarCardImage src={cardArt.dwarfPluto} alt="" width={72} />
             </motion.div>
           </motion.div>
         ) : null}
@@ -102,9 +101,9 @@ function MoveAnimation({ phase }: { phase: number }) {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
             transition={{ type: "spring", stiffness: 110, damping: 12 }}
-            className="prismatic-edge relative rounded-xl border-2 border-black bg-space-black p-3"
+            className="relative"
           >
-            <CelestialBody variant="star" size={72} />
+            <SolarCardImage src={cardArt.starSunYoung} alt="" width={104} prismatic />
             <motion.span
               animate={{ opacity: [0.3, 0.8, 0.3] }}
               transition={{ duration: 2, repeat: Infinity }}
@@ -169,9 +168,7 @@ export function QuickRules() {
 
         {reducedMotion ? (
           <div className="flex h-56 items-center justify-center rounded-2xl border border-white/10 bg-space-black sm:h-64">
-            <div className="prismatic-edge rounded-xl border-2 border-black bg-space-black p-3">
-              <CelestialBody variant="star" size={72} />
-            </div>
+            <SolarCardImage src={cardArt.starSunYoung} alt="" width={104} prismatic />
           </div>
         ) : (
           <MoveAnimation phase={phase} />
